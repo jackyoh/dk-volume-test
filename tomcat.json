@@ -1,0 +1,43 @@
+{
+  "id": "mytomcat",
+  "cpus": 1,
+  "instances": 1,
+  "mem": 512,
+  "container": {
+    "type": "MESOS",
+    "volumes": [
+      {
+        "containerPath": "tomcatwebapps",
+        "mode": "RW",
+        "persistent": {
+          "type": "mount",
+          "size": 2048,
+          "maxSize": 2048
+        }
+      }
+    ],
+    "docker": {
+      "image": "jackyoh/mytomcat13:7.0.73",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 1234,
+          "hostPort": 0,
+          "protocol": "tcp",
+          "name": "tomcat"
+        }
+       ]
+     }
+    },
+    "env": {
+       "TOMCATWEBAPPS": "tomcatwebapps"
+    },
+    "residency": {
+       "taskLostBehavior": "WAIT_FOREVER"
+    },
+    "upgradeStrategy": {
+       "maximumOverCapacity": 0,
+       "minimumHealthCapacity": 0
+    }
+}
+
